@@ -1,7 +1,6 @@
 fun main() {
 
     var opc: Int
-    var cab : Int = 0
     var nL = CabinaTel("")
     var cabinas: MutableList<CabinaTel> = mutableListOf()
 
@@ -27,46 +26,58 @@ fun main() {
                     cabinas.forEachIndexed { index, cabina ->
                         println("${index + 1}. Cabina ${cabina.nomCab}")
                     }
-                    do {
-                        println("***Realizar una llamada***")
-                        println(
-                            "¿Que tipo de llamada desea realizar?: \n 1. Llamada local........................$50 pesos" +
-                                    "\n 2. Llamada larga distancia..............$350 pesos" +
-                                    "\n 3. Llamada celular......................$150 pesos" +
-                                    "\n 4. Regresar al menu anterior"
-                        )
-                        var opc1: Int = readln().toInt()
-                        when (opc1) {
-                            1 -> {
-                                println("***Llamada local***")
-                                nL.numLlam()
-                                println(nL.cosTotal(50))
-                            }
+                    val cabinaIndex = readln().toInt() - 1
 
-                            2 -> {
-                                println("***Llamada larga distancia***")
-                                nL.numLlam()
-                                println(nL.cosTotal(350))
+                    if (cabinaIndex in cabinas.indices) {
+                        val cabinaSeleccionada = cabinas[cabinaIndex]
+                        do {
+                            println("***Realizar una llamada***")
+                            println(
+                                "¿Que tipo de llamada desea realizar?: \n 1. Llamada local........................$50 pesos" +
+                                        "\n 2. Llamada larga distancia..............$350 pesos" +
+                                        "\n 3. Llamada celular......................$150 pesos" +
+                                        "\n 4. Regresar al menu anterior"
+                            )
+                            var opc1: Int = readln().toInt()
+                            when (opc1) {
+                                1 -> {
+                                    println("***Llamada local***")
+                                    cabinaSeleccionada.numLlam()
+                                    println(cabinaSeleccionada.cosTotal(50))
+                                }
 
-                            }
+                                2 -> {
+                                    println("***Llamada larga distancia***")
+                                    cabinaSeleccionada.numLlam()
+                                    println(cabinaSeleccionada.cosTotal(350))
 
-                            3 -> {
-                                println("***Llamada celular***")
-                                nL.numLlam()
-                                println(nL.cosTotal(150))
+                                }
+
+                                3 -> {
+                                    println("***Llamada celular***")
+                                    cabinaSeleccionada.numLlam()
+                                    println(cabinaSeleccionada.cosTotal(150))
+                                }
                             }
-                        }
-                    } while (opc1 != 4)
+                        } while (opc1 != 4)
+                    }else {
+                        println("Selección inválida.")
+                    }
                     println("Saliendo del programa...")
                 }
             }
             3 -> {
-                nL.listarCabina()
+                cabinas.forEach{ it.listarCabina()}
+            }
+            4 ->{
+                println("Limpiando datos de cabinas")
+                cabinas.clear()
             }
 
         }
     }while (opc != 5)
     println("Gracias por usar nuestro servicio \nVuelva pronto :)")
+
 }
 
 
